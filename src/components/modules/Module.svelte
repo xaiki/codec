@@ -2,13 +2,13 @@
     import { ui_store } from "../../stores/store";
     import Timeline from "./Timeline.svelte";
     import Map from "./Map.svelte";
-    import MediumVideo from "./MediumVideo.svelte";
+    import MediumMediaFile from "./MediumMediaFile.svelte";
 
     export let module;
     export let medium;
 
     let modules_options = {
-        media: MediumVideo,
+        media: MediumMediaFile,
         map: Map,
         timeline: Timeline,
     };
