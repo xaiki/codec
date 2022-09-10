@@ -49,13 +49,13 @@ import { element } from "svelte/internal";
     overflow: hidden; /* Add this */
   }
 
-  video {
+  :global(.medium_video video) {
     width: 100%;
     height: 100%;
     object-fit: contain;
   }
 
-  img {
+  :global(.medium_img img) {
     width: 100%;
     height: 100%;
     object-fit: contain;
