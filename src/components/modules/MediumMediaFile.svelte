@@ -21,10 +21,10 @@ import { element } from "svelte/internal";
   let elementHTML;
   let className;
   if (isPhoto) {
-    elementHTML = `<img ${src}>`;
+    elementHTML = `<img src="${src}">`;
     className = "medium_img";
   } else {
-    elementHTML = `<video controls muted ${src} type="video/mp4" />`;
+    elementHTML = `<video controls muted src="${src}" type="video/mp4" />`;
     className = "medium_video";
   }
 
