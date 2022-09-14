@@ -42,7 +42,7 @@
     <div class="module_topbar">
         <div class="module_title text_level1">
             {module}
-            {module.includes("medi") ? ": " + medium?.UAR : ""}
+            {module.includes("medi") ? ": <div class='media_file_name'>" + medium?.UAR : "</div>"}
         </div>
         <div
             class="module_close"
@@ -101,5 +101,11 @@
 
     .timeline_module {
         margin-right: var(--grid-size);
+    }
+
+    :global(.media_file_name) {
+        display: inline-block;
+        background: white;
+        border-radius: 4px;
     }
 </style>
