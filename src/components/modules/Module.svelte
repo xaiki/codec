@@ -42,7 +42,7 @@
     <div class="module_topbar">
         <div class="module_title text_level1">
             {module}
-            {module.includes("medi") ? ": <div class='media_file_name'>" + medium?.UAR : "</div>"}
+            {@html module.includes("medi") ? ": <div class='media_file_name'>" + medium?.UAR + "</div>": ""}
         </div>
         <div
             class="module_close"
