@@ -1,4 +1,12 @@
 const { GoogleSpreadsheet } = require('google-spreadsheet');
+const fs = require('fs');
+
+function dump(name) {
+   return (data) =>{
+     fs.writeFileSync(`./dump/${name}.json`, data)
+     return data
+   }
+ }
 
 exports.handler = async (event, context, callback) => {
     try {
@@ -24,9 +32,11 @@ exports.handler = async (event, context, callback) => {
             platform_config_rows.forEach((platform_config_row) => {
                 platform_config[platform_config_row._rawData[0]] = platform_config_row._rawData[1]
             })
+            const body = JSON.stringify(platform_config);
+            dump('platformconfig')(body)
             return {
                 statusCode: 200,
-                body: JSON.stringify(platform_config),
+                body
             }
         } else {
             const list_sheet_index = sheet_ids_by_title[requested_sheet_title]
@@ -38,9 +48,11 @@ exports.handler = async (event, context, callback) => {
                     items.push(sheet_row._rawData)
                 }
             })
+            const body = JSON.stringify(items);
+            dump(requested_sheet_title)(body)
             return {
                 statusCode: 200,
-                body: JSON.stringify(items),
+                body
             }
         }
     } catch (err) {
