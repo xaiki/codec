@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import { ui_store, filter_toggles } from "../../stores/store";
 </script>
 
