@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import {
     media_store_filtered,
     events_store,

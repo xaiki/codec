@@ -1,5 +1,5 @@
-<script>
-import { element } from "svelte/internal";
+<script lang="ts">
+  import { element } from "svelte/internal";
 
   import { local_file_store, platform_config_store } from "../../stores/store";
   export let medium;
