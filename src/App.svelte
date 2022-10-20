@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { onMount } from "svelte";
   import { throttle } from "underscore";
   import LocalMediaInput from "./components/LocalMediaInput.svelte";
@@ -20,6 +20,8 @@
     mouse_xy.y = event.clientY;
   }, 5);
 
+ const sheet_function = 'hack'
+
   let width_mod_grid = Math.floor(document.body.clientWidth / 10) * 10;
   let height_mod_grid = Math.floor(document.body.clientHeight / 10) * 10;
 
@@ -37,16 +39,16 @@
 
   function fetch_google_sheet_data() {
     return fetch(
-      `/.netlify/functions/googlesheets?sheet=platformconfig&offset=1`
+      `/.netlify/functions/${sheet_function}?sheet=platformconfig&offset=1`
     )
       .then((rows_string) => rows_string.json())
       .then((platform_config) => {
         $platform_config_store = platform_config;
         fetch(
-          `/.netlify/functions/googlesheets?sheet=` +
-            platform_config["Title of tab with media assets"] +
-            `&offset=` +
-            platform_config["Rank of assets row with column names"]
+          `/.netlify/functions/${sheet_function}?sheet=` +
+          platform_config["Title of tab with media assets"] +
+          `&offset=` +
+          platform_config["Rank of assets row with column names"]
         )
           .then((rows_string) => rows_string.json())
           .then((media) => {
@@ -54,10 +56,10 @@
           });
 
         fetch(
-          `/.netlify/functions/googlesheets?sheet=` +
-            platform_config["Title of tab with events"] +
-            `&offset=` +
-            platform_config["Rank of events row with column names"]
+          `/.netlify/functions/${sheet_function}?sheet=` +
+          platform_config["Title of tab with events"] +
+          `&offset=` +
+          platform_config["Rank of events row with column names"]
         )
           .then((rows_string) => rows_string.json())
           .then((events) => {
