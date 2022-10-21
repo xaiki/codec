@@ -31,6 +31,9 @@
             }
         }
     }
+    function toggle_form() {
+        $ui_store.open_form.includes(medium.UAR) ? $ui_store.open_form = $ui_store.open_form.filter(elem=> elem != medium.UAR) : $ui_store.open_form = [...$ui_store.open_form, medium.UAR]
+    }
 </script>
 
 <div
@@ -42,7 +45,12 @@
     <div class="module_topbar">
         <div class="module_title text_level1">
             {module}
-            {@html module.includes("medi") ? ": <div class='media_file_name'>" + medium?.UAR + "</div>": ""}
+            {#if module.includes("medi")}
+                : <div class="media_file_name">{medium?.UAR}</div>
+                <button class="media_file_form_button" on:click={() => toggle_form()}>
+                    Toggle form
+                </button>
+            {/if}
         </div>
         <div
             class="module_close"
@@ -101,6 +109,14 @@
 
     .timeline_module {
         margin-right: var(--grid-size);
+    }
+
+    .media_file_form_button {
+        background-color: black;
+        border-radius: 7px;
+        color: white;
+        border: white solid 1px;
+        margin-left: 10px;
     }
 
     :global(.media_file_name) {
