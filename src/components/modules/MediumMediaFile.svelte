@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { element } from "svelte/internal";
   import MediaForm from "./MediaForm.svelte";
 
   import { local_file_store, platform_config_store } from "../../stores/store";
@@ -18,24 +17,15 @@
 
   /* We check if we have some kind of photo or a video*/
   const isPhoto = src.match(/.jpg|.png|.jpeg/i) || false;
-
-  let elementHTML;
-  let className;
-
-  // to do: refactor to use elements instead of html strings
-  if (isPhoto) {
-    elementHTML = `<img src="${src}">`;
-    className = "medium_img";
-  } else {
-    elementHTML = `<video controls muted src="${src}" type="video/mp4" />`;
-    className = "medium_video";
-  }
-
 </script>
 
-<div class={className} id={medium.id}>
-  {@html elementHTML}
-  <MediaForm {medium}></MediaForm>
+<div class={isPhoto?"medium_img":"medium_video"} id={medium.id}>
+  {#if isPhoto}
+    <img {src}/>
+     {:else}
+    <video controls muted {src} type="video/mp4" />
+  {/if}
+  <MediaForm {medium}/>
 </div>
 
 <style>
