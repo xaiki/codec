@@ -1,5 +1,6 @@
 <script lang="ts">
   import { element } from "svelte/internal";
+  import MediaForm from "./MediaForm.svelte";
 
   import { local_file_store, platform_config_store } from "../../stores/store";
   export let medium;
@@ -20,6 +21,8 @@
 
   let elementHTML;
   let className;
+
+  // to do: refactor to use elements instead of html strings
   if (isPhoto) {
     elementHTML = `<img src="${src}">`;
     className = "medium_img";
@@ -27,15 +30,17 @@
     elementHTML = `<video controls muted src="${src}" type="video/mp4" />`;
     className = "medium_video";
   }
-
+  
 </script>
 
-<div class="{className}" id={medium.id}>
+<div class={className} id={medium.id}>
   {@html elementHTML}
+  <MediaForm {medium}></MediaForm>
 </div>
 
 <style>
   .medium_video {
+    display: flex;
     width: 100%;
     height: 40vh;
     margin: 0 auto;
@@ -43,6 +48,7 @@
   }
 
   .medium_img {
+    display: flex;
     width: 100%;
     height: 40vh;
     margin: 0 auto;
@@ -61,3 +67,4 @@
     object-fit: contain;
   }
 </style>
+
