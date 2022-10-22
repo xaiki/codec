@@ -19,7 +19,7 @@
   const isPhoto = src.match(/.jpg|.png|.jpeg/i) || false;
 </script>
 
-<div class={isPhoto?"medium_img":"medium_video"} id={medium.id}>
+<div class="medium" id={medium.id}>
   {#if isPhoto}
     <img {src}/>
      {:else}
@@ -29,29 +29,15 @@
 </div>
 
 <style>
-  .medium_video {
+  .medium  {
     display: flex;
-    width: 100%;
+    width: auto;
     height: 40vh;
     margin: 0 auto;
     overflow: hidden; /* Add this */
   }
 
-  .medium_img {
-    display: flex;
-    width: 100%;
-    height: 40vh;
-    margin: 0 auto;
-    overflow: hidden; /* Add this */
-  }
-
-  :global(.medium_video video) {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
-
-  :global(.medium_img img) {
+  :global(.medium > *) {
     width: 100%;
     height: 100%;
     object-fit: contain;
