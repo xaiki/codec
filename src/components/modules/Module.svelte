@@ -31,9 +31,6 @@
             }
         }
     }
-    function toggle_form() {
-        $ui_store.open_form.includes(medium.UAR) ? $ui_store.open_form = $ui_store.open_form.filter(elem=> elem != medium.UAR) : $ui_store.open_form = [...$ui_store.open_form, medium.UAR]
-    }
 </script>
 
 <div
@@ -47,9 +44,6 @@
             {module}
             {#if module.includes("medi")}
                 : <div class="media_file_name">{medium?.UAR}</div>
-                <button class="media_file_form_button" on:click={() => toggle_form()}>
-                    Toggle form
-                </button>
             {/if}
         </div>
         <div
