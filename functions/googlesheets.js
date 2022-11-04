@@ -1,14 +1,23 @@
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 
+let global_doc;
+
+const getDoc = async () => {
+    if (global_doc) return global_doc;
+
+    const unready_doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEET_ID);
+    await unready_doc.useServiceAccountAuth({
+        client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
+        private_key: process.env.GOOGLE_CLIENT_PRIVATE_KEY.replace(/\\n/gm, '\n')
+    });
+    await unready_doc.loadInfo()
+    global_doc = unready_doc
+    return global_doc
+}
+
 exports.handler = async (event, context, callback) => {
     try {
-        const doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEET_ID);
-        await doc.useServiceAccountAuth({
-            client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-            private_key: process.env.GOOGLE_CLIENT_PRIVATE_KEY.replace(/\\n/gm, '\n')
-        });
-        await doc.loadInfo()
-
+        const doc = await getDoc()
         const request = event.queryStringParameters.request
         const requested_sheet_offset = parseInt(event.queryStringParameters.offset) - 2
         const requested_sheet_range_start = parseInt(event.queryStringParameters.rangeStart)
