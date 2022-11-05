@@ -43,7 +43,8 @@
       .then((platform_config) => {
         $platform_config_store = platform_config;
         fetch(
-          `/.netlify/functions/googlesheets?sheet=` +
+          "/.netlify/functions/googlesheets?request=getData" +
+            "&sheet=" +
             platform_config["Title of tab with media assets"] +
             `&offset=` +
             platform_config["Rank of assets row with column names"]
@@ -52,11 +53,11 @@
           .then((media) => {
             process_video_sheet_response(media);
           });
-
         fetch(
-          `/.netlify/functions/googlesheets?sheet=` +
+          "/.netlify/functions/googlesheets?request=getData" +
+            "&sheet=" +
             platform_config["Title of tab with events"] +
-            `&offset=` +
+            "&offset=" +
             platform_config["Rank of events row with column names"]
         )
           .then((rows_string) => rows_string.json())
@@ -234,7 +235,7 @@
   }
 
   // Takes datetime object created on local machine with time offset
-  // returns datetime object in UTC time when read by same local machine
+ // returns datetime object in UTC time when read by same local machine
   function localtoUTCdatetimeobj (datetimeobj) {
     const userTimezoneOffset = datetimeobj.getTimezoneOffset() * 60000;
     return new Date(datetimeobj.getTime() - userTimezoneOffset);
