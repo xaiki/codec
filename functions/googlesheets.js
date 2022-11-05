@@ -39,48 +39,49 @@ exports.handler = async (event, context, callback) => {
             return {
                 statusCode: 200,
                 body: JSON.stringify(platform_config),
-            }
+    }
         } else if (request.includes('size')) {
             let requested_sheet = request.slice(5)
             const list_sheet_index = sheet_ids_by_title[requested_sheet]
-            //ensure an non empty columns exists after the last filled column in that top row
+    //ensure an non empty columns exists after the last filled column in that top row
             let sheet_rows = await doc.sheetsByIndex[list_sheet_index].getRows({ offset: requested_sheet_offset })
             let items = []
             sheet_rows.forEach((sheet_row) => {
                 if (sheet_row._rawData[0] !== '') {
                     items.push(sheet_row._rawData)
-                }
+        }
             })
             let assets_info = {
                 total_size: Buffer.byteLength(JSON.stringify(items)),
                 n_rows: items.length,
-            }
-            return {
+    }
+    return {
                 statusCode: 200,
                 body: JSON.stringify(assets_info),
-            }
+    }
         } else {
-            const list_sheet_index = sheet_ids_by_title[request]
-            //ensure an non empty columns exists after the last filled column in that top row
+            const tab = event.queryStringParameters.tab;
+            const list_sheet_index = sheet_ids_by_title[tab];
+    //ensure an non empty columns exists after the last filled column in that top row
             let sheet_rows
             if (requested_sheet_range_end && requested_sheet_range_end) {
                 sheet_rows = await doc.sheetsByIndex[list_sheet_index].getRows(
                     {
                         offset: requested_sheet_offset + requested_sheet_range_start,
                         limit: requested_sheet_range_end - requested_sheet_range_start
-                    })
+        })
 
-            } else {
+    } else {
                 sheet_rows = await doc.sheetsByIndex[list_sheet_index].getRows({ offset: requested_sheet_offset })
-            }
+    }
             let items = []
             sheet_rows.forEach((sheet_row) => {
                 if (sheet_row._rawData[0] !== '') {
                     items.push(sheet_row._rawData)
-                }
+        }
             })
-            return {
-                statusCode: 200,
+        return {
+            statusCode: 200,
                 body: JSON.stringify(items),
             }
         }

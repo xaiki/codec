@@ -51,7 +51,8 @@
       .then((platform_config) => {
         $platform_config_store = platform_config;
         fetch(
-          "/.netlify/functions/googlesheets?request=size_" +
+          "/.netlify/functions/googlesheets?request=size" +
+            "&tab=" +
             platform_config["Title of tab with media assets"] +
             "&offset=" +
             platform_config["Rank of assets row with column names"]
@@ -85,7 +86,8 @@
 
             const request_range = (assets_request) =>
               fetch(
-                "/.netlify/functions/googlesheets?request=" +
+                "/.netlify/functions/googlesheets?request=tab" +
+                  "&tab=" +
                   platform_config["Title of tab with media assets"] +
                   "&offset=" +
                   platform_config["Rank of assets row with column names"] +
@@ -112,7 +114,8 @@
           })
           .then(() => {
             fetch(
-              "/.netlify/functions/googlesheets?request=" +
+              "/.netlify/functions/googlesheets?request=tab" +
+                "&tab=" +
                 platform_config["Title of tab with events"] +
                 "&offset=" +
                 platform_config["Rank of events row with column names"]
@@ -187,10 +190,10 @@
             // and checkig if already in there prevents from re-adding + resetting to false
             // at every sheet fetch
             if (
-              r === 0 &&
-                !Object.keys($filter_toggles).includes(column_names[i])
+            r === 0 &&
+              !Object.keys($filter_toggles).includes(column_names[i])
             ) {
-              $filter_toggles[column_names[i]] = false;
+            $filter_toggles[column_names[i]] = false;
             }
           } else {
             video[column_names[i]] = col_value;
@@ -277,7 +280,7 @@
   }
 
   // Takes datetime object created on local machine with time offset
-  // returns datetime object in UTC time when read by same local machine
+ // returns datetime object in UTC time when read by same local machine
   function localtoUTCdatetimeobj (datetimeobj) {
     const userTimezoneOffset = datetimeobj.getTimezoneOffset() * 60000;
     return new Date(datetimeobj.getTime() - userTimezoneOffset);

@@ -24,7 +24,7 @@
     orderedByTime = true, // boolean whether video should be positioned vertically by time
     orderedOtherIndex = {}, // dictionary: a video's property value > vertical position
     free_time_at_row = [], // array containing, for every vertical row, when the latest video on that row ends
-    video_y_position = []; // array containing, for every video, their vertical position
+      video_y_position = []; // array containing, for every video, their vertical position
 
   let el, container;
   var ro = new ResizeObserver((entries) => {
@@ -58,8 +58,8 @@
   let log_at_first = true;
   let debug_canvas, debug_camera, debug_renderer, cameraHelper;
 
-  onMount(() => {
-    initial_setup_done = false;
+ onMount(() => {
+   initial_setup_done = false;
     init(el, container);
     animate();
     ro.observe(container);
