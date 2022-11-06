@@ -46,6 +46,19 @@
       [k]: string_to_boolean_or_value(v)
     }), { _column_names: column_names.slice(first_column) });
 
+  const content_analysis_to_row = (ca) => ca._column_names.map(n => ca[n]);
+
+  media_store.on("push", media => fetch(
+    `/.netlify/functions/googlesheets?request=updateRow` +
+      `&tab=${$platform_config_store["Title of tab with media assets"]}` +
+      `&row=${media.row}` +
+      `&offset=${CONTENT_ANALYSIS_FIRST_COLUMN}`, {
+      method: "POST",
+      body: JSON.stringify(content_analysis_to_row(
+        media.contentAnalysis))
+    }
+  ));
+
   onMount(() => {
     const fetch_interval = setInterval(
       fetch_google_sheet_data,
@@ -228,6 +241,7 @@
         video.type = "range";
         video.label = video.UAR;
         video.id = video.UAR;
+        video.row = r + 2;
         video.url = $platform_config_store["Title of column used for url"];
 
         // date time string to datetime object
