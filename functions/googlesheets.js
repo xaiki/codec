@@ -64,12 +64,32 @@ const getTab = async (doc, { tab, range, offset, title_to_id }) => {
     }
     return items;
 }
+const updateRow = async (doc, { body, row, offset = 0, tab, title_to_id }) => {
+    console.error(body, row, offset, tab, title_to_id);
+    const sheet = doc.sheetsByIndex[title_to_id[tab]];
+
+    await sheet.loadCells({
+        startRowIndex: row,
+        endRowIndex: row + 1,
+        startColumnIndex: offset,
+        endColumnIndex: offset + body.length
+    });
+
+    for (let i = 0; i < body.length; i++) {
+        const cell = await sheet.getCell(row, offset + i);
+        cell.value = typeof (body[i]) === 'boolean' ? body[i] ? "TRUE" : "FALSE" : body[i];
+    }
+
+    await sheet.saveUpdatedCells();
+    return body;
+};
 
 const handlers = {
     platformconfig: getPlatformConfig,
     size: getSize,
-    tab: getTab
-}
+    tab: getTab,
+    updateRow
+};
 
 exports.handler = async (event, context, callback) => {
     try {
