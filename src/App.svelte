@@ -69,7 +69,7 @@
             "&tab=" +
             platform_config["Title of tab with media assets"] +
             "&offset=" +
-            platform_config["Rank of assets row with column names"]
+            platform_config["Rank of assets row with column names"] - 2
         )
           .then((assets_info) => assets_info.json())
           .then((assets_info) => {
@@ -103,8 +103,8 @@
                 "/.netlify/functions/googlesheets?request=tab" +
                   "&tab=" +
                   platform_config["Title of tab with media assets"] +
-                  "&offset=" +
-                  platform_config["Rank of assets row with column names"] +
+                `&offset=${platform_config["Rank of assets row with column names"] - 2 }`
+                          +
                   "&rangeStart=" +
                   assets_request.start +
                   "&rangeEnd=" +
@@ -131,8 +131,7 @@
               "/.netlify/functions/googlesheets?request=tab" +
                 "&tab=" +
                 platform_config["Title of tab with events"] +
-                "&offset=" +
-                platform_config["Rank of events row with column names"]
+              `&offset=${platform_config["Rank of events row with column names" - 2]}`
             )
               .then((rows_string) => rows_string.json())
               .then((events) => {

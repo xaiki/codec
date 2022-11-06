@@ -76,7 +76,7 @@ exports.handler = async (event, context, callback) => {
         const doc = await getDoc();
         const { offset, rangeStart, rangeEnd, ...rest } = event.queryStringParameters;
         const config = {
-            offset: parseInt(offset) - 2,
+            offset: parseInt(offset),
             range: {
                 start: parseInt(rangeStart),
                 end: parseInt(rangeEnd)
