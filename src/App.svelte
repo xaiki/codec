@@ -184,8 +184,6 @@
   function process_video_sheet_response (rows) {
     // first row of table is column names
     const column_names = rows[0];
-    // create array to feed data as being processed
-    const new_videos = {};
 
     // for every row (skipping the first row of column names)
     rows.slice(1).forEach((row, r) => {
@@ -277,15 +275,11 @@
           }
         }
 
-        new_videos[video.UAR] = video;
+        media_store.push(video, false);
       } catch (error) {
         console.log(error);
       }
     });
-
-    if (JSON.stringify($media_store) !== JSON.stringify(new_videos)) {
-      $media_store = new_videos;
-    }
   }
 
   // Takes datetime object created on local machine with time offset
