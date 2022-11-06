@@ -20,6 +20,8 @@
     mouse_xy.y = event.clientY;
   }, 5);
 
+  const CONTENT_ANALYSIS_FIRST_COLUMN = 12;
+
   let width_mod_grid = Math.floor(document.body.clientWidth / 10) * 10;
   let height_mod_grid = Math.floor(document.body.clientHeight / 10) * 10;
 
@@ -33,6 +35,12 @@
     : v === "FALSE"
     ? false
     : v;
+
+  const get_content_analysis_object = (row, column_names, first_column) => column_names.slice(first_column)
+    .map((n, i) => ([n, row[first_column + i]]))
+    .reduce((a, [k, v]) => Object.assign(a, {
+      [k]: string_to_boolean_or_value(v)
+    }), { _column_names: column_names.slice(first_column) });
 
   onMount(() => {
     const fetch_interval = setInterval(fetch_google_sheet_data, 10000);
@@ -116,7 +124,10 @@
     rows.slice(1).forEach((row, r) => {
       try {
         // create a video object
-        const video = {};
+        const video = {
+          contentAnalysis: get_content_analysis_object(row, column_names, CONTENT_ANALYSIS_FIRST_COLUMN)
+        };
+
         // for each column in row
         for (const i in row) {
           const col_value = string_to_boolean_or_value(row[i]);
