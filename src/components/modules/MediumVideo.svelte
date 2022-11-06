@@ -14,35 +14,26 @@
   }
 </script>
 
-{#if src.includes("mp4") || src.includes("mov")}
-  <div class="medium_video" id={medium.id}>
-    <video controls muted {src} type="video/mp4" />
-  </div>
-{:else if src.includes("png") || src.includes("jpeg") || src.includes("jpg")}
-  <div class="medium_image" id={medium.id}>
-    <!-- svelte-ignore a11y-missing-attribute -->
-    <img {src} />
-  </div>
-{/if}
+<div class="medium" id={medium.id}>
+  {#if src.includes("mp4") || src.includes("mov")}
+      <video controls muted {src} type="video/mp4" />
+  {:else if src.includes("png") || src.includes("jpeg") || src.includes("jpg")}
+      <!-- svelte-ignore a11y-missing-attribute -->
+      <img {src} />
+  {/if}
+</div>
 
 <style>
-  .medium_video {
-    width: 100%;
+.medium  {
+   display: flex;
+   width: auto;
     height: 40vh;
     margin: 0 auto;
     overflow: hidden; /* Add this */
   }
 
-  .medium_image {
-    height: 40vh;
-    display: flex;
-    flex-flow: column;
-    flex-direction: row;
-    justify-content: center;
-  }
-
-  video {
-    width: 100%;
+ .medium > * {
+   width: auto;
     height: 100%;
     object-fit: contain;
   }
