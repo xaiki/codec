@@ -1,4 +1,5 @@
-<script>
+<script lang="ts">
+  import MediaForm from "./MediaForm.svelte";
   import { local_file_store, platform_config_store } from "../../stores/store";
   export let medium;
 
@@ -21,6 +22,7 @@
       <!-- svelte-ignore a11y-missing-attribute -->
       <img {src} />
   {/if}
+  <MediaForm medium={medium}/>
 </div>
 
 <style>
