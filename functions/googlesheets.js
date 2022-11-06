@@ -74,9 +74,10 @@ const handlers = {
 exports.handler = async (event, context, callback) => {
     try {
         const doc = await getDoc();
-        const { offset, rangeStart, rangeEnd, ...rest } = event.queryStringParameters;
+        const { offset, row, rangeStart, rangeEnd, ...rest } = event.queryStringParameters;
         const config = {
             offset: parseInt(offset),
+            row: parseInt(row),
             range: {
                 start: parseInt(rangeStart),
                 end: parseInt(rangeEnd)
@@ -91,6 +92,11 @@ exports.handler = async (event, context, callback) => {
         for (key of Object.keys(doc._rawSheets)) {
             let { title, index } = doc._rawSheets[key]._rawProperties;
             config.title_to_id[title] = index;
+        }
+
+        if (event.body) {
+            console.error(event.body);
+            config.body = JSON.parse(event.body);
         }
 
         const ret = await handlers[config.request](doc, config);
