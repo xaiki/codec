@@ -34,21 +34,22 @@ function serve() {
 }
 
 export default {
-	input: 'src/main.js',
-	output: {
-		sourcemap: true,
-		format: 'iife',
-		name: 'app',
-		file: 'public/build/bundle.js'
-	},
-	plugins: [
-		replace({
-			GOOGLE_SERVICE_ACCOUNT_EMAIL: JSON.stringify(process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL),
-			GOOGLE_CLIENT_PRIVATE_KEY: JSON.stringify(process.env.GOOGLE_CLIENT_PRIVATE_KEY),
-			GOOGLE_SHEET_ID: JSON.stringify(process.env.GOOGLE_SHEET_ID),
-			MAPBOX_ACCESS_TOKEN: JSON.stringify(process.env.MAPBOX_ACCESS_TOKEN),
-			preventAssignment: true
-		}),
+        input: 'src/main.js',
+        output: {
+                sourcemap: true,
+                format: 'iife',
+                name: 'app',
+                file: 'public/build/bundle.js'
+        },
+        plugins: [
+                replace({
+                        GOOGLE_SERVICE_ACCOUNT_EMAIL: JSON.stringify(process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL),
+                        GOOGLE_CLIENT_PRIVATE_KEY: JSON.stringify(process.env.GOOGLE_CLIENT_PRIVATE_KEY),
+                        GOOGLE_SHEET_ID: JSON.stringify(process.env.GOOGLE_SHEET_ID),
+                        MAPBOX_ACCESS_TOKEN: JSON.stringify(process.env.MAPBOX_ACCESS_TOKEN),
+                        MAPBOX_STYLE_URL: JSON.stringify(process.env.MAPBOX_STYLE_URL),
+                        preventAssignment: true
+                }),
 
 		svelte({
 			dev: !production,
