@@ -32,6 +32,12 @@
     height_mod_grid = Math.floor(document.body.clientHeight / 10) * 10;
   }, 500);
 
+  const string_to_boolean_or_value = v => v === "TRUE"
+    ? true
+    : v === "FALSE"
+    ? false
+    : v;
+
   onMount(() => {
     const fetch_interval = setInterval(
       fetch_google_sheet_data,
@@ -179,26 +185,19 @@
         // create a video object
         const video = {};
         // for each column in row
-        row.forEach((col_value, i) => {
+        for (const i in row) {
+          const col_value = string_to_boolean_or_value(row[i]);
           // assign the new object the column value under the correct key
 
-          // if the col value a string boolean
-          if (col_value === "TRUE" || col_value === "FALSE") {
-            // transform string boolean to actual boolean
-            video[column_names[i]] = col_value === "TRUE";
-            // if boolean not already in filter_toggles (only need to do once on first row)
-            // and checkig if already in there prevents from re-adding + resetting to false
-            // at every sheet fetch
-            if (
+          if (typeof (col_value) === "boolean" && (
             r === 0 &&
               !Object.keys($filter_toggles).includes(column_names[i])
-            ) {
+          )) {
             $filter_toggles[column_names[i]] = false;
-            }
           } else {
             video[column_names[i]] = col_value;
           }
-        });
+        };
 
         // some UARs have _V at the end
         if (video.UAR.slice(video.UAR.length - 2) === "_V") {
