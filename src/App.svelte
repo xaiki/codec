@@ -65,7 +65,7 @@
 
   function fetch_google_sheet_data () {
     return fetch(
-      `/.netlify/functions/googlesheets?sheet=platformconfig&offset=1`
+      `/.netlify/functions/googlesheets?request=getPlatformConfig&offset=0`
     )
       .then((rows_string) => rows_string.json())
       .then((platform_config) => {

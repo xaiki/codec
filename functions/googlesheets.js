@@ -44,8 +44,8 @@ const getSize = async (doc, { tab, offset, title_to_id }) => {
 
 }
 
-const getTab = async (doc, { tab, range, offset, title_to_id }) => {
-    const list_sheet_index = title_to_id[tab];
+const getData = async (doc, { sheet, range, offset, title_to_id }) => {
+    const list_sheet_index = title_to_id[sheet];
     //ensure an non empty columns exists after the last filled column in that top row
     let sheet_rows;
     if (range.start && range.end) {
@@ -85,9 +85,9 @@ const updateRow = async (doc, { body, row, offset = 0, tab, title_to_id }) => {
 };
 
 const handlers = {
-    platformconfig: getPlatformConfig,
+    getPlatformConfig,
     size: getSize,
-    tab: getTab,
+    getData,
     updateRow
 };
 
