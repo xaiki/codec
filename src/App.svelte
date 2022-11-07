@@ -44,22 +44,16 @@
         $platform_config_store = platform_config;
         fetch(
           "/.netlify/functions/googlesheets?request=getData" +
-            "&sheet=" +
-            platform_config["Title of tab with media assets"] +
-            `&offset=` +
-            platform_config["Rank of assets row with column names"]
-        )
+            `&sheet=${platform_config["Title of tab with media assets"]}` +
+            `&offset=${parseInt(platform_config["Rank of assets row with column names"])}`)
           .then((rows_string) => rows_string.json())
           .then((media) => {
             process_video_sheet_response(media);
           });
         fetch(
           "/.netlify/functions/googlesheets?request=getData" +
-            "&sheet=" +
-            platform_config["Title of tab with events"] +
-            "&offset=" +
-            platform_config["Rank of events row with column names"]
-        )
+            `&sheet=${platform_config["Title of tab with events"]}` +
+            `&offset=${parseInt(platform_config["Rank of assets row with column names"])}`)
           .then((rows_string) => rows_string.json())
           .then((events) => {
             process_event_sheet_response(events);
