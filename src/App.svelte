@@ -39,7 +39,8 @@
   const get_content_analysis_object = (row, column_names, first_column) => column_names.slice(first_column)
     .map((n, i) => ([n, row[first_column + i]]))
     .reduce((a, [k, v]) => Object.assign(a, {
-      [k]: string_to_boolean_or_value(v)
+      // XXX(xaiki): this is a hack to detect 'Visibl{e,ity}' in the desc
+      [k]: v ? string_to_boolean_or_value(v) : k.match(/visibl/i) ? false : ""
     }), { _column_names: column_names.slice(first_column) });
 
   onMount(() => {
