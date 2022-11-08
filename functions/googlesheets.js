@@ -15,9 +15,11 @@ const getDoc = async () => {
     return global_doc;
 }
 
-const getPlatformConfig = async (doc, { offset, title_to_id }) => {
+const getPlatformConfig = async (doc, { title_to_id }) => {
     const index = title_to_id['Platform config'];
-    const rows = await doc.sheetsByIndex[index].getRows({ offset });
+    const rows = await doc.sheetsByIndex[index].getRows({
+        offset: -1
+    });
     const platform_config = {};
     for (row of rows) {
         platform_config[row._rawData[0]] = row._rawData[1];

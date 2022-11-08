@@ -80,7 +80,7 @@
                 ? '60px'
                 : '30px'};
                               color:red"
-            >
+        >
               {$ui_store.media_in_view.includes(medium.UAR) ? "•" : "◦"}
             </div>
           </Marker>

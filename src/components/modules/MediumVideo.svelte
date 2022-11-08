@@ -1,5 +1,5 @@
 <script lang="ts">
-  import MediaForm from "./MediaForm.svelte";
+ import MediaForm from "./MediaForm.svelte";
   import { local_file_store, platform_config_store } from "../../stores/store";
   export let medium;
 

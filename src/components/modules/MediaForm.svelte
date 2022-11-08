@@ -1,7 +1,7 @@
 <script lang="ts">
   import {media_store} from '../../stores/store.js';
-  export let medium;
-  let expanded = false
+ export let medium;
+ let expanded = false
  // for some reason the store gets updated even when NOT USING the reactive store syntax…
  let contentAnalysis = Object.assign({}, medium.contentAnalysis)
  $: media_store.push({...medium, contentAnalysis})
@@ -29,7 +29,7 @@
             {/if}
           </div>
         {/each}
-      </form>
+        </form>
       <slot></slot>
     </div>
 </div>

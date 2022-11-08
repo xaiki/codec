@@ -65,7 +65,7 @@
 
   function fetch_google_sheet_data () {
     return fetch(
-      `/.netlify/functions/googlesheets?request=getPlatformConfig&offset=0`
+      `/.netlify/functions/googlesheets?request=getPlatformConfig`
     )
       .then((rows_string) => rows_string.json())
       .then((platform_config) => {
@@ -139,7 +139,7 @@
         const video = {
           contentAnalysis: get_content_analysis_object(row, column_names, CONTENT_ANALYSIS_FIRST_COLUMN)
         };
-
+        
         // for each column in row
         for (const i in row) {
           const col_value = string_to_boolean_or_value(row[i]);
