@@ -92,10 +92,8 @@ const handlers = {
     updateRow
 };
 
-exports.handler = async (event, context, callback) => {
-    try {
-        const doc = await getDoc();
-        const { offset, row, rangeStart, rangeEnd, ...rest } = event.queryStringParameters;
+const do_handle = ({ offset, row, rangeStart, rangeEnd, ...rest }, body = null) =>
+    new Promise((resolve, reject) => getDoc().then(doc => {
         const config = {
             offset: parseInt(offset),
             row: parseInt(row),
@@ -115,21 +113,32 @@ exports.handler = async (event, context, callback) => {
             config.title_to_id[title] = index;
         }
 
-        if (event.body) {
-            console.error(event.body);
-            config.body = JSON.parse(event.body);
+        if (body) {
+            console.error(body);
+            config.body = JSON.parse(body);
         }
 
-        const ret = await handlers[config.request](doc, config);
-        return {
-            statusCode: 200,
-            body: JSON.stringify(ret)
-        }
-    } catch (err) {
-        console.log('googlesheets failed', err)
+        handlers[config.request](doc, config)
+            .then(JSON.stringify)
+            .then(resolve);
+    }));
+
+const memoized_do_handle = memoize(do_handle, {
+    length: 1,
+    promise: true,
+    maxAge: 60000,
+    preFetch: 0.5
+})
+
+exports.handler = async (event, context, callback) => memoized_do_handle(event.queryStringParameters, event.body)
+    .catch(err => {
+        console.log("googlesheets failed", err);
         return {
             statusCode: 500,
             body: err.toString()
         }
-    }
-}
+    })
+    .then(body => ({
+        statusCode: 200,
+        body
+    }))
