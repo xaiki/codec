@@ -239,6 +239,9 @@
   <title>Investigative Platform</title>
   <meta name="robots" content="noindex nofollow" />
   <html lang="en" />
+  {#each Object.values($media_store) as medium}
+    <link rel="preload" as="image" href={medium[$platform_config_store["Title of column used for url"]]} />
+  {/each}
 </svelte:head>
 
 <FilterPanel />
